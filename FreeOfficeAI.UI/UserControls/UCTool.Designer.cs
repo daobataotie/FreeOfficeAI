@@ -1,0 +1,155 @@
+﻿namespace FreeOfficeAI.UI.UserControls
+{
+    partial class UCTool
+    {
+        /// <summary> 
+        /// 必需的设计器变量。
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// 清理所有正在使用的资源。
+        /// </summary>
+        /// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region 组件设计器生成的代码
+
+        /// <summary> 
+        /// 设计器支持所需的方法 - 不要修改
+        /// 使用代码编辑器修改此方法的内容。
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.panelMessage = new System.Windows.Forms.Panel();
+            this.splitContainerControl1 = new System.Windows.Forms.SplitContainer();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.rdoBtnFormula = new System.Windows.Forms.RadioButton();
+            this.rdoBtnChat = new System.Windows.Forms.RadioButton();
+            this.btnSend = new System.Windows.Forms.Button();
+            this.txtInput = new System.Windows.Forms.TextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
+            this.splitContainerControl1.Panel1.SuspendLayout();
+            this.splitContainerControl1.Panel2.SuspendLayout();
+            this.splitContainerControl1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // panelMessage
+            // 
+            this.panelMessage.BackColor = System.Drawing.Color.LightCyan;
+            this.panelMessage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelMessage.Location = new System.Drawing.Point(0, 0);
+            this.panelMessage.Name = "panelMessage";
+            this.panelMessage.Size = new System.Drawing.Size(400, 650);
+            this.panelMessage.TabIndex = 0;
+            // 
+            // splitContainerControl1
+            // 
+            this.splitContainerControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerControl1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerControl1.Name = "splitContainerControl1";
+            this.splitContainerControl1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainerControl1.Panel1
+            // 
+            this.splitContainerControl1.Panel1.Controls.Add(this.panelMessage);
+            this.splitContainerControl1.Panel1.Text = "Panel1";
+            // 
+            // splitContainerControl1.Panel2
+            // 
+            this.splitContainerControl1.Panel2.Controls.Add(this.panel1);
+            this.splitContainerControl1.Panel2.Controls.Add(this.btnSend);
+            this.splitContainerControl1.Panel2.Controls.Add(this.txtInput);
+            this.splitContainerControl1.Panel2.Text = "Panel2";
+            this.splitContainerControl1.Size = new System.Drawing.Size(400, 800);
+            this.splitContainerControl1.SplitterDistance = 650;
+            this.splitContainerControl1.TabIndex = 1;
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.panel1.Controls.Add(this.rdoBtnFormula);
+            this.panel1.Controls.Add(this.rdoBtnChat);
+            this.panel1.Location = new System.Drawing.Point(3, 121);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(126, 22);
+            this.panel1.TabIndex = 2;
+            // 
+            // rdoBtnFormula
+            // 
+            this.rdoBtnFormula.AutoSize = true;
+            this.rdoBtnFormula.Location = new System.Drawing.Point(66, 4);
+            this.rdoBtnFormula.Name = "rdoBtnFormula";
+            this.rdoBtnFormula.Size = new System.Drawing.Size(47, 16);
+            this.rdoBtnFormula.TabIndex = 1;
+            this.rdoBtnFormula.Text = "公式";
+            this.rdoBtnFormula.UseVisualStyleBackColor = true;
+            // 
+            // rdoBtnChat
+            // 
+            this.rdoBtnChat.AutoSize = true;
+            this.rdoBtnChat.Checked = true;
+            this.rdoBtnChat.Location = new System.Drawing.Point(4, 4);
+            this.rdoBtnChat.Name = "rdoBtnChat";
+            this.rdoBtnChat.Size = new System.Drawing.Size(47, 16);
+            this.rdoBtnChat.TabIndex = 0;
+            this.rdoBtnChat.TabStop = true;
+            this.rdoBtnChat.Text = "对话";
+            this.rdoBtnChat.UseVisualStyleBackColor = true;
+            // 
+            // btnSend
+            // 
+            this.btnSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSend.Location = new System.Drawing.Point(322, 121);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(75, 23);
+            this.btnSend.TabIndex = 1;
+            this.btnSend.Text = "发送";
+            // 
+            // txtInput
+            // 
+            this.txtInput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtInput.Location = new System.Drawing.Point(0, 0);
+            this.txtInput.Multiline = true;
+            this.txtInput.Name = "txtInput";
+            this.txtInput.Size = new System.Drawing.Size(400, 120);
+            this.txtInput.TabIndex = 0;
+            // 
+            // UCTool
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.splitContainerControl1);
+            this.Name = "UCTool";
+            this.splitContainerControl1.Panel1.ResumeLayout(false);
+            this.splitContainerControl1.Panel2.ResumeLayout(false);
+            this.splitContainerControl1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).EndInit();
+            this.splitContainerControl1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Panel panelMessage;
+        private System.Windows.Forms.SplitContainer splitContainerControl1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.RadioButton rdoBtnFormula;
+        private System.Windows.Forms.RadioButton rdoBtnChat;
+        private System.Windows.Forms.Button btnSend;
+        private System.Windows.Forms.TextBox txtInput;
+    }
+}

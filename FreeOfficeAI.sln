@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeOfficeAI.Core", "FreeOfficeAI.Core\FreeOfficeAI.Core.csproj", "{2CB07395-3443-482B-9C02-AF573DDFF914}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeOfficeAI.UI", "FreeOfficeAI.UI\FreeOfficeAI.UI.csproj", "{C928D8B9-5792-4CDF-9CE4-7AD1F5B37E90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeOfficeAI.Excel", "FreeOfficeAI.Excel\FreeOfficeAI.Excel.csproj", "{F22EB3D8-1B4E-4E37-8E68-4727627FE0A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeOfficeAI.Word", "FreeOfficeAI.Word\FreeOfficeAI.Word.csproj", "{9BD5ECD9-28EB-4755-8D5C-1E2C661E8DAF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2CB07395-3443-482B-9C02-AF573DDFF914}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CB07395-3443-482B-9C02-AF573DDFF914}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CB07395-3443-482B-9C02-AF573DDFF914}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CB07395-3443-482B-9C02-AF573DDFF914}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C928D8B9-5792-4CDF-9CE4-7AD1F5B37E90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C928D8B9-5792-4CDF-9CE4-7AD1F5B37E90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C928D8B9-5792-4CDF-9CE4-7AD1F5B37E90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C928D8B9-5792-4CDF-9CE4-7AD1F5B37E90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F22EB3D8-1B4E-4E37-8E68-4727627FE0A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F22EB3D8-1B4E-4E37-8E68-4727627FE0A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F22EB3D8-1B4E-4E37-8E68-4727627FE0A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F22EB3D8-1B4E-4E37-8E68-4727627FE0A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BD5ECD9-28EB-4755-8D5C-1E2C661E8DAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BD5ECD9-28EB-4755-8D5C-1E2C661E8DAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BD5ECD9-28EB-4755-8D5C-1E2C661E8DAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BD5ECD9-28EB-4755-8D5C-1E2C661E8DAF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
