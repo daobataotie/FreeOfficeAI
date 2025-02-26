@@ -261,7 +261,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\" />
+    <None Include="Resources\提炼摘要.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\查找.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\对话.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\翻译.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\关于.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\矫正.png" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

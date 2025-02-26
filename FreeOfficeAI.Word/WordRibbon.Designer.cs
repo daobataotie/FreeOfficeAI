@@ -68,6 +68,7 @@
             // btnSummary
             // 
             this.btnSummary.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.btnSummary.Image = global::FreeOfficeAI.Word.Properties.Resources.提炼摘要;
             this.btnSummary.Label = "总结提炼";
             this.btnSummary.Name = "btnSummary";
             this.btnSummary.ShowImage = true;
@@ -76,6 +77,7 @@
             // btnContractCheck
             // 
             this.btnContractCheck.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.btnContractCheck.Image = global::FreeOfficeAI.Word.Properties.Resources.查找;
             this.btnContractCheck.Label = "合同检查";
             this.btnContractCheck.Name = "btnContractCheck";
             this.btnContractCheck.ShowImage = true;
@@ -84,6 +86,7 @@
             // btnRectify
             // 
             this.btnRectify.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.btnRectify.Image = global::FreeOfficeAI.Word.Properties.Resources.矫正;
             this.btnRectify.Label = "纠错矫正";
             this.btnRectify.Name = "btnRectify";
             this.btnRectify.ShowImage = true;
@@ -92,6 +95,7 @@
             // btnTranslate
             // 
             this.btnTranslate.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.btnTranslate.Image = global::FreeOfficeAI.Word.Properties.Resources.翻译;
             this.btnTranslate.Label = "翻译";
             this.btnTranslate.Name = "btnTranslate";
             this.btnTranslate.ShowImage = true;
@@ -100,6 +104,7 @@
             // btnChat
             // 
             this.btnChat.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.btnChat.Image = global::FreeOfficeAI.Word.Properties.Resources.对话;
             this.btnChat.Label = "对话";
             this.btnChat.Name = "btnChat";
             this.btnChat.ShowImage = true;
@@ -114,6 +119,7 @@
             // btnAbout
             // 
             this.btnAbout.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.btnAbout.Image = global::FreeOfficeAI.Word.Properties.Resources.关于;
             this.btnAbout.Label = "关于";
             this.btnAbout.Name = "btnAbout";
             this.btnAbout.ShowImage = true;

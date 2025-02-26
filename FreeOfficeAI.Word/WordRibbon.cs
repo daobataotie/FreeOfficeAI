@@ -153,7 +153,7 @@ namespace FreeOfficeAI.Word
                 ProductName = "FreeOfficeAI-Word插件",
                 Version = $"{version.Major}.{version.Minor}.{version.Build}",
                 Author = "曹瑞",
-                Description = "    本插件调用本地大模型，实现文档分析、合同审核、纠错矫正、翻译、对话等功能。\r\n    目前为第一版，功能还在完善中，将持续更新。\r\n    使用说明：点击按钮时，默认处理选中文本，若无选中文本，则处理整篇文档\r\n\r\n    电话：17729294802 微信同号",
+                Description = "    本插件调用本地大模型，实现文档分析、合同审核、纠错矫正、翻译、对话等功能。\r\n    目前为第一版，功能还在完善中，将持续更新。\r\n    使用说明：点击按钮时，默认处理选中文本，若无选中文本，则处理整篇文档\r\n\r\n邮箱：844309084@qq.com",
             };
             FrmAbout frmAbout = new FrmAbout(appInfo);
             frmAbout.ShowDialog();

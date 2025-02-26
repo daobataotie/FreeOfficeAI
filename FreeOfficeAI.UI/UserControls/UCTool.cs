@@ -55,7 +55,7 @@ namespace FreeOfficeAI.UI.UserControls
             }
         }
 
-        private async void SendButton_Click(object sender, EventArgs e)
+        private void SendButton_Click(object sender, EventArgs e)
         {
             if (!done)
                 return;
@@ -77,67 +77,70 @@ namespace FreeOfficeAI.UI.UserControls
             try
             {
                 AddMessage("思考中...", false); // 返回的消息
-                try
+                Task.Run(async () =>
                 {
-                    bool isChat = rdoBtnChat.Checked;
-                    if (isChat)
+                    try
                     {
-                        // 读取流式响应
-                        await foreach (var responsePart in OllamaApi.GetResponseStreamAsync(message))
+                        bool isChat = rdoBtnChat.Checked;
+                        if (isChat)
                         {
-                            LableUpdate(responsePart);
+                            // 读取流式响应
+                            await foreach (var responsePart in OllamaApi.GetResponseStreamAsync(message))
+                            {
+                                LableUpdate(responsePart);
+                            }
+
+                            AddInserBtn(isChat);
+                        }
+                        else
+                        {
+                            bool getSelectionExcel = true;
+                            if (keyWordsAll.Any(k => message.Contains(k)) && !keyWordsSelection.Any(k => message.Contains(k)))
+                                getSelectionExcel = false;
+
+                            var excelContent = getExcelContent(getSelectionExcel);
+                            message += "，Excel数据：" + excelContent;
+
+                            string systemContent = "你是一位Excel专家，擅长表格公式、图表、统计分析、数据处理等方面，以及VBA代码编写。你可以根据用户的描述生成可执行的完整VBA代码，用于操作Excel工作表，进行插入公式、修改/查询/统计内容、生成图表、分析数据等。";
+                            string userContent = $"请针对以下功能写一个完整的可执行VBA代码:{message}。\n 要求：1，方法名为“FreeOfficeAIExample”，且名称下一行为固定内容“On Error Resume Next”表示忽略错误；2，并在方法之前添加“FreeOfficeAIStart”关键字用以表示代码段开始，方法结尾添加“FreeOfficeAIEnd”关键字用以表示代码段结束；3，考虑性能问题，优化代码提高运行效率；4，VBA方法应以“End Sub”结尾；5，检查生成的VBA代码是否存在语法错误并修正。";
+
+                            // 读取流式响应
+                            await foreach (var responsePart in OllamaApi.GetResponseStreamAsync_VBA(systemContent, userContent))
+                            {
+                                LableUpdate(responsePart);
+                            }
+
+                            AddInserBtn(isChat);
                         }
 
-                        AddInserBtn(isChat);
+                        //var result = await OllamaApi.GetVBAResponseAsync(isChat ? message : prompt);
+
+                        //LableUpdate(result.Item2, false);
+
+                        //if (result.Item1)
+                        //{
+                        //    done = true;
+
+                        //    AddInserBtn(isChat);
+                        //}
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        bool getSelectionExcel = true;
-                        if (keyWordsAll.Any(k => message.Contains(k)) && !keyWordsSelection.Any(k => message.Contains(k)))
-                            getSelectionExcel = false;
-
-                        message += "，Excel数据：" + getExcelContent(getSelectionExcel);
-
-                        string systemContent = "你是一位Excel专家，擅长表格公式、图表、统计分析、数据处理等方面，以及VBA代码编写。你可以根据用户的描述生成可执行的完整VBA代码，用于操作Excel工作表，进行插入公式、修改/查询/统计内容、生成图表、分析数据等。";
-                        string userContent = $"请针对以下功能写一个完整的可执行VBA代码:{message}。\n注意：1，方法名为“FreeOfficeAIExample”，且名称下一行为固定内容“On Error Resume Next”表示忽略错误；2，并在方法之前添加“FreeOfficeAIStart”关键字用以表示代码段开始，方法结尾添加“FreeOfficeAIEnd”关键字用以表示代码段结束；3，考虑性能问题，优化代码提高运行效率；4，VBA方法应以“End Sub”结尾；5，检查生成的VBA代码是否存在语法错误并修正。";
-
-                        // 读取流式响应
-                        await foreach (var responsePart in OllamaApi.GetResponseStreamAsync(systemContent, userContent))
-                        {
-                            LableUpdate(responsePart);
-                        }
-
-                        AddInserBtn(isChat);
+                        LableUpdate(ex.Message, false);
                     }
+                    finally
+                    {
+                        done = true;
 
-                    //var result = await OllamaApi.GetVBAResponseAsync(isChat ? message : prompt);
-
-                    //LableUpdate(result.Item2, false);
-
-                    //if (result.Item1)
-                    //{
-                    //    done = true;
-
-                    //    AddInserBtn(isChat);
-                    //}
-                }
-                catch (Exception ex)
-                {
-                    LableUpdate(ex.Message, false);
-                }
-                finally
-                {
-                    done = true;
-
-                    if (btnSend.InvokeRequired)
-                        btnSend.Invoke(new Action(() =>
-                        {
+                        if (btnSend.InvokeRequired)
+                            btnSend.Invoke(new Action(() =>
+                            {
+                                btnSend.Enabled = true;
+                            }));
+                        else
                             btnSend.Enabled = true;
-                        }));
-                    else
-                        btnSend.Enabled = true;
-                }
-
+                    }
+                });
             }
             catch (Exception ex)
             {

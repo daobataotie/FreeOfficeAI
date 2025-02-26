@@ -6,6 +6,7 @@ using System.Xml.Linq;
 using Excel = Microsoft.Office.Interop.Excel;
 using Office = Microsoft.Office.Core;
 using Microsoft.Office.Tools.Excel;
+using System.Text.Json;
 
 namespace FreeOfficeAI.Excel
 {
@@ -38,43 +39,11 @@ namespace FreeOfficeAI.Excel
 
             if (getSelection)
             {
-                contentRange= Globals.ThisAddIn.Application.Selection as Microsoft.Office.Interop.Excel.Range; 
-
-                //// 获取当前选择的区域
-                //var selection = Globals.ThisAddIn.Application.Selection as Microsoft.Office.Interop.Excel.Range;
-                //if (selection != null)
-                //{
-                //    List<ExcelContent> contents = new List<ExcelContent>();
-                //    foreach (Microsoft.Office.Interop.Excel.Range cell in selection.Cells)
-                //    {
-                //        contents.Add(new ExcelContent
-                //        {
-                //            Cell = cell.Address,
-                //            Value = cell.Value2?.ToString()
-                //        });
-                //    }
-
-                //    //return selection.Cells.Value2.ToString();
-                //}
+                contentRange = Globals.ThisAddIn.Application.Selection as Microsoft.Office.Interop.Excel.Range;
             }
             else
             {
                 contentRange = (Globals.ThisAddIn.Application.ActiveSheet as Microsoft.Office.Interop.Excel.Worksheet).UsedRange;
-
-                //// 获取当前工作表
-                //var worksheet = Globals.ThisAddIn.Application.ActiveSheet as Microsoft.Office.Interop.Excel.Worksheet;
-                //if (worksheet != null)
-                //{
-                //    List<ExcelContent> contents = new List<ExcelContent>();
-                //    foreach (Microsoft.Office.Interop.Excel.Range cell in selection.Cells)
-                //    {
-                //        contents.Add(new ExcelContent
-                //        {
-                //            Cell = cell.Address,
-                //            Value = cell.Value2?.ToString()
-                //        });
-                //    }
-                //}
             }
 
             // 获取当前工作表
@@ -90,6 +59,8 @@ namespace FreeOfficeAI.Excel
                         Value = cell.Value2?.ToString()
                     });
                 }
+
+                content = JsonSerializer.Serialize(contents);
             }
 
             return content;

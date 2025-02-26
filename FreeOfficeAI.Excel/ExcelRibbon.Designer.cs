@@ -58,6 +58,7 @@
             // btnTool
             // 
             this.btnTool.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.btnTool.Image = global::FreeOfficeAI.Excel.Properties.Resources.工具;
             this.btnTool.Label = "AI工具";
             this.btnTool.Name = "btnTool";
             this.btnTool.ShowImage = true;
@@ -66,6 +67,7 @@
             // btnChat
             // 
             this.btnChat.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.btnChat.Image = global::FreeOfficeAI.Excel.Properties.Resources.对话;
             this.btnChat.Label = "对话";
             this.btnChat.Name = "btnChat";
             this.btnChat.ShowImage = true;
