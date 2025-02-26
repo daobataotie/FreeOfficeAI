@@ -14,6 +14,6 @@ Free office AI tool
 技术交流、学习、优化、BUG修正等可联系：
 邮箱：844309084@qq.com
 
-![Word示例](Images\word.png)
+![Word示例](Images/word.png)
 
-![Excel示例](Images\excel.png)
+![Excel示例](Images/excel.png)
