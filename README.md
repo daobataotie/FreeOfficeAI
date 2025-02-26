@@ -11,10 +11,11 @@ Free office AI tool
 目前为第一版，结合上下文连续对话，Excel自动处理，UI等还未优化
 更多功能持续更新中...
 
-## 联系方式：
-技术交流、学习、优化、BUG修正等可联系：  
-邮箱：844309084@qq.com
-
+## 功能演示：
 ![Word示例](Images/word.png)
 
 ![Excel示例](Images/excel.png)
+
+## 联系方式：
+技术交流、学习、优化、BUG修正等可联系：  
+邮箱：844309084@qq.com
