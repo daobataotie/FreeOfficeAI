@@ -66,6 +66,57 @@ namespace FreeOfficeAI.Excel
             return content;
         }
 
+        public bool ExcuteVBA(string vbaCode)
+        {
+            if (string.IsNullOrWhiteSpace(vbaCode))
+                return false;
+
+            var excelApp = Globals.ThisAddIn.Application;
+            Microsoft.Vbe.Interop.VBProject vbProject = excelApp.ActiveWorkbook.VBProject;
+            Microsoft.Vbe.Interop.VBComponent vbComponent = null;
+
+            try
+            {
+                vbComponent = vbProject.VBComponents.Add(Microsoft.Vbe.Interop.vbext_ComponentType.vbext_ct_StdModule);
+                vbComponent.CodeModule.AddFromString(vbaCode);
+
+                excelApp._Run2("FreeOfficeAIExample");
+
+                //if (isSuccess)
+                {
+                    //System.Windows.Forms.MessageBox.Show("公式应用成功");
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                string fileName = "C:\\Users\\Administrator\\Desktop\\log.txt";
+                string logMsg = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}{Environment.NewLine}" +
+                    $"错误信息：{ex.Message}{Environment.NewLine}";
+                System.IO.File.AppendAllText(fileName, logMsg);
+
+                System.Windows.Forms.MessageBox.Show("公式应用失败");
+#endif
+
+                return false;
+            }
+            finally
+            {
+                vbProject.VBComponents.Remove(vbComponent);
+
+#if DEBUG
+                string fileName = "C:\\Users\\Administrator\\Desktop\\log.txt";
+                string logMsg = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}{Environment.NewLine}" +
+                    $"{vbaCode}{Environment.NewLine}" +
+                    $"{"".PadRight(50, '-')}{Environment.NewLine}{Environment.NewLine}";
+                System.IO.File.AppendAllText(fileName, logMsg);
+#endif
+            }
+        }
+
         #region VSTO 生成的代码
 
         /// <summary>

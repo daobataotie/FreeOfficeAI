@@ -75,7 +75,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigSetting.cs" />
     <Compile Include="OllamaApi.cs" />
+    <Compile Include="OllamaMessage.cs" />
+    <Compile Include="OllamaRequest.cs" />
+    <Compile Include="OllamaResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

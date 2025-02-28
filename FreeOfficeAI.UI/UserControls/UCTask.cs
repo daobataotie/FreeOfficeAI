@@ -14,15 +14,12 @@ namespace FreeOfficeAI.UI.UserControls
 {
     public partial class UCTask : UCBase
     {
-        Label lastControl = null;
         private bool done = true;
+        OllamaRequest request = new OllamaRequest();
 
         public UCTask(Action<string> insertOffice, Func<string> getContent)
         {
             InitializeComponent();
-
-            panelMessage.BackColor = Color.LightCyan;
-            panelMessage.AutoScroll = true;
 
             insertToOffice = insertOffice;
             getWordContent = getContent;
@@ -34,6 +31,7 @@ namespace FreeOfficeAI.UI.UserControls
                 return;
 
             AddMessage(functionType, true); // 自己发出的消息
+            UpdateMessage(functionType, false); // 更新消息，主要是为了计算控件高度
 
             //获取Word文档内容
             string wordContent = getWordContent();
@@ -45,183 +43,98 @@ namespace FreeOfficeAI.UI.UserControls
 
             userContent += wordContent;
 
-            done = false;
+            //点击Word Ribbon按钮时，清空之前的消息
+            request = new OllamaRequest()
+            {
+                Messages = new List<OllamaMessage>()
+                {
+                    new OllamaMessage { Role = "system", Content = systemContent },
+                    new OllamaMessage { Role = "user", Content = userContent },
+                },
+            };
 
+            GetResponse();
+        }
+
+        protected override void SendRequest()
+        {
+            if (!done)
+                return;
+
+            string message = txtInput.Text.Trim();
+            if (string.IsNullOrEmpty(message))
+                return;
+
+            AddMessage(message, true); // 自己发出的消息
+            UpdateMessage(message, false); // 更新消息，主要是为了计算控件高度
+
+            txtInput.Text = "";
+            txtInput.SelectionStart = 0;
+            txtInput.Focus();
+
+            //第一次请求，生成系统消息和用户消息
+            if (request.Messages == null || request.Messages.Count == 0)
+            {
+                request.Messages = new List<OllamaMessage>()
+                {
+                    new OllamaMessage { Role = "user", Content = message },
+                };
+            }
+            else
+                request.Messages.Add(new OllamaMessage
+                {
+                    Role = "user",
+                    Content = message
+                });    // 后续请求，追加用户消息
+
+            GetResponse();
+        }
+
+        private void GetResponse()
+        {
             try
             {
+                done = false;
+                btnSend.Enabled = false;
+
                 AddMessage("思考中...", false); // 返回的消息
                 Task.Run(async () =>
                 {
                     try
                     {
                         // 读取流式响应
-                        await foreach (var responsePart in OllamaApi.GetResponseStreamAsync(systemContent, userContent))
+                        await foreach (var responsePart in OllamaApi.GetChatStreamAsync(request))
                         {
-                            LableUpdate(responsePart);
+                            UpdateMessage(responsePart);
                         }
 
-                        AddInserBtn();
+                        AddInsertBtn("插入文档");
                     }
                     catch (Exception ex)
                     {
-                        LableUpdate(ex.Message, false);
+                        if (ex is TaskCanceledException tce && tce.CancellationToken.IsCancellationRequested)
+                            UpdateMessage("请求超时，请重试！", false);
+                        else
+                            UpdateMessage(ex.Message, false);
                     }
                     finally
                     {
                         done = true;
+
+                        if (btnSend.InvokeRequired)
+                            btnSend.Invoke(new Action(() =>
+                            {
+                                btnSend.Enabled = true;
+                            }));
+                        else
+                            btnSend.Enabled = true;
                     }
                 });
 
             }
             catch (Exception ex)
             {
-                LableUpdate(ex.Message, false);
-            }
-        }
-
-        private void AddMessage(string message, bool isSelf)
-        {
-            RoundedLabelControl messageLabel = new RoundedLabelControl();
-            messageLabel.Text = message;
-            //messageLabel = LabelAutoSizeMode.Vertical;
-            messageLabel.BackColor = isSelf ? Color.FromArgb(137, 217, 97) : Color.Snow;
-            messageLabel.Padding = new Padding(2);
-            messageLabel.Font = new Font("微软雅黑", 10);
-            messageLabel.ForeColor = Color.Black;
-
-            PictureBox avatarBox = new PictureBox();
-            avatarBox.Size = new Size(30, 30);
-            avatarBox.SizeMode = PictureBoxSizeMode.StretchImage;
-
-            int addY = 0;
-            if (lastControl?.Tag?.ToString() == "1")
-                addY = 20;
-
-            if (isSelf)
-            {
-                //messageLabel.Location = new Point(chatPanel.Width / 2, lastY + 20);
-                messageLabel.Location = new Point(180, (lastControl?.Bottom ?? 0) + 20 + addY);
-                messageLabel.Width = 140;
-
-                avatarBox.Image = Properties.Resources.User;
-                avatarBox.Location = new Point(325, messageLabel.Top - 5);
-            }
-            else
-            {
-                //messageLabel.Location = new Point(10, lastY + 20);
-                messageLabel.Location = new Point(50, (lastControl?.Bottom ?? 0) + 20 + addY);
-                messageLabel.Width = 270;
-
-                avatarBox.Image = Properties.Resources.AI;
-                avatarBox.Location = new Point(10, messageLabel.Top - 5);
-            }
-
-            lastControl = messageLabel;
-
-            panelMessage.Controls.Add(messageLabel);
-            panelMessage.Controls.Add(avatarBox);
-            panelMessage.ScrollControlIntoView(messageLabel);
-        }
-
-        /// <summary>
-        /// 更新消息
-        /// </summary>
-        /// <param name="content">消息内容</param>
-        /// <param name="isAppend">是否为追加</param>
-        private void LableUpdate(string content, bool isAppend = true)
-        {
-            if (lastControl.InvokeRequired)
-            {
-                lastControl.Invoke(new Action(() =>
-                {
-                    LableUpdate(content, isAppend);
-                }));
-
-                panelMessage.Invoke(new Action(() =>
-                {
-                    panelMessage.ScrollControlIntoView(lastControl);
-                }));
-            }
-            else
-            {
-                if (lastControl.Text == "思考中...")
-                    lastControl.Text = "";
-
-                if (isAppend)
-                    lastControl.Text += content;
-                else
-                    lastControl.Text = content;
-
-                using (Graphics g = lastControl.CreateGraphics())
-                {
-                    SizeF textSize = g.MeasureString(lastControl.Text, lastControl.Font, lastControl.Width - lastControl.Padding.Horizontal);
-
-                    // 设置控件的高度，考虑 Padding 的影响
-                    lastControl.Height = (int)textSize.Height + lastControl.Padding.Vertical;
-                }
-
-                // 滚动到控件视图
-                panelMessage.ScrollControlIntoView(lastControl);
-
-
-                Application.DoEvents(); // 更新 UI
-            }
-        }
-
-        /// <summary>
-        /// 添加插入按钮
-        /// </summary>
-        private void AddInserBtn()
-        {
-            System.Windows.Forms.Button btnInsert = new System.Windows.Forms.Button();
-            btnInsert.Text = "插入文档";
-            btnInsert.Size = new Size(70, 20);
-            btnInsert.Location = new Point(50, lastControl.Bottom + 1);
-            btnInsert.Tag = lastControl.Text;
-            btnInsert.Click += BtnInsert_Click;
-
-            if (panelMessage.InvokeRequired)
-            {
-                panelMessage.Invoke(new Action(() =>
-                {
-                    panelMessage.Controls.Add(btnInsert);
-
-                    panelMessage.ScrollControlIntoView(btnInsert);
-                }));
-            }
-            else
-            {
-                panelMessage.Controls.Add(btnInsert);
-
-                panelMessage.ScrollControlIntoView(btnInsert);
-            }
-
-            if (lastControl.InvokeRequired)
-                lastControl.Invoke(new Action(() =>
-                {
-                    lastControl.Tag = "1";
-                }));
-            else
-                lastControl.Tag = "1";
-        }
-
-        /// <summary>
-        /// 插入按钮点击事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BtnInsert_Click(object sender, EventArgs e)
-        {
-            string content = (string)(sender as System.Windows.Forms.Button).Tag;
-            if (!string.IsNullOrWhiteSpace(content))
-            {
-                //如果包含“</think>”,则只截取后面内容
-                if (content.Contains("</think>"))
-                {
-                    content = content.Substring(content.IndexOf("</think>") + 8);
-                }
-
-                insertToOffice(content.Trim());
+                UpdateMessage(ex.Message, false);
             }
         }
     }

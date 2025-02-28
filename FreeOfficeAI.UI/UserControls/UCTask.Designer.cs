@@ -28,30 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panelMessage = new System.Windows.Forms.Panel();
             this.SuspendLayout();
-            // 
-            // panelMessage
-            // 
-            this.panelMessage.BackColor = System.Drawing.Color.LightCyan;
-            this.panelMessage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMessage.Location = new System.Drawing.Point(0, 0);
-            this.panelMessage.Name = "panelMessage";
-            this.panelMessage.Size = new System.Drawing.Size(400, 800);
-            this.panelMessage.TabIndex = 1;
             // 
             // UCTask
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.panelMessage);
             this.Name = "UCTask";
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panelMessage;
     }
 }

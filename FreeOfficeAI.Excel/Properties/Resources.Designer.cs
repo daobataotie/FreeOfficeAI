@@ -63,6 +63,16 @@ namespace FreeOfficeAI.Excel.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap 关于 {
+            get {
+                object obj = ResourceManager.GetObject("关于", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap 对话 {
             get {
                 object obj = ResourceManager.GetObject("对话", resourceCulture);
@@ -76,6 +86,16 @@ namespace FreeOfficeAI.Excel.Properties {
         internal static System.Drawing.Bitmap 工具 {
             get {
                 object obj = ResourceManager.GetObject("工具", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 设置 {
+            get {
+                object obj = ResourceManager.GetObject("设置", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

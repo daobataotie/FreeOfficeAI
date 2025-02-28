@@ -131,8 +131,9 @@ namespace FreeOfficeAI.Word
                 string content = Application.Selection.Text;
                 if (!string.IsNullOrWhiteSpace(content))
                 {
-                    string prompt = $"你是一位语言专家，精通中文和其他多种语言，能自动识别内容语言，若为中文则翻译成英文，非中文则翻译成中文。请翻译以下内容，不需要思考过程，不需要解释，直接翻译并给出结果：{content.Trim()}";
-                    var response = OllamaApi.GetResponseAsync(prompt);
+                    string prompt = $"你是一位语言专家，精通中文和其他多种语言，能自动识别内容语言，若为中文则翻译成英文，非中文则翻译成中文。不需要思考过程，不需要解释，直接翻译并给出结果。请翻译以下内容：{content.Trim()}。";
+
+                    var response = OllamaApi.GetGenerateAsync(new OllamaRequest() { Prompt = prompt });
 
                     string transContent = response.Result;
                     if (transContent.Contains("</think>"))

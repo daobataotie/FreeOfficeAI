@@ -42,6 +42,7 @@
             this.btnTranslate = this.Factory.CreateRibbonButton();
             this.btnChat = this.Factory.CreateRibbonButton();
             this.group2 = this.Factory.CreateRibbonGroup();
+            this.btnSetting = this.Factory.CreateRibbonButton();
             this.btnAbout = this.Factory.CreateRibbonButton();
             this.tabFreeOfficeAI.SuspendLayout();
             this.group1.SuspendLayout();
@@ -72,7 +73,6 @@
             this.btnSummary.Label = "总结提炼";
             this.btnSummary.Name = "btnSummary";
             this.btnSummary.ShowImage = true;
-            this.btnSummary.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BtnSummary_Click);
             // 
             // btnContractCheck
             // 
@@ -81,7 +81,6 @@
             this.btnContractCheck.Label = "合同检查";
             this.btnContractCheck.Name = "btnContractCheck";
             this.btnContractCheck.ShowImage = true;
-            this.btnContractCheck.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BtnContractCheck_Click);
             // 
             // btnRectify
             // 
@@ -90,7 +89,6 @@
             this.btnRectify.Label = "纠错矫正";
             this.btnRectify.Name = "btnRectify";
             this.btnRectify.ShowImage = true;
-            this.btnRectify.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BtnRectify_Click);
             // 
             // btnTranslate
             // 
@@ -99,7 +97,6 @@
             this.btnTranslate.Label = "翻译";
             this.btnTranslate.Name = "btnTranslate";
             this.btnTranslate.ShowImage = true;
-            this.btnTranslate.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnTranslate_Click);
             // 
             // btnChat
             // 
@@ -112,9 +109,18 @@
             // 
             // group2
             // 
+            this.group2.Items.Add(this.btnSetting);
             this.group2.Items.Add(this.btnAbout);
             this.group2.Label = "帮助";
             this.group2.Name = "group2";
+            // 
+            // btnSetting
+            // 
+            this.btnSetting.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.btnSetting.Image = global::FreeOfficeAI.Word.Properties.Resources.设置;
+            this.btnSetting.Label = "设置";
+            this.btnSetting.Name = "btnSetting";
+            this.btnSetting.ShowImage = true;
             // 
             // btnAbout
             // 
@@ -123,7 +129,6 @@
             this.btnAbout.Label = "关于";
             this.btnAbout.Name = "btnAbout";
             this.btnAbout.ShowImage = true;
-            this.btnAbout.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnAbout_Click);
             // 
             // WordRibbon
             // 
@@ -152,6 +157,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btnTranslate;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group2;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btnAbout;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btnSetting;
     }
 
     partial class ThisRibbonCollection

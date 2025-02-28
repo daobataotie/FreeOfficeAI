@@ -12,9 +12,21 @@ namespace FreeOfficeAI.UI.CustomControls
     /// <summary>
     /// 自定义圆角标签控件
     /// </summary>
-    public class RoundedLabelControl : Label
+    public class RoundedLabel : Label
     {
         private const int CornerRadius = 10;
+
+        public RoundedLabel()
+        {
+            this.DoubleBuffered = true; // 启用双缓冲减少闪烁
+
+            this.BorderStyle = BorderStyle.None;
+            this.Padding = new Padding(6);
+            this.ForeColor = Color.Black;
+
+            this.Font = new Font("微软雅黑", 10);
+            this.Height = 25;
+        }
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -45,7 +57,7 @@ namespace FreeOfficeAI.UI.CustomControls
                 format.Alignment = StringAlignment.Near;
                 format.LineAlignment = StringAlignment.Center;
 
-                Rectangle textRect = new Rectangle(3, 0, this.Width, this.Height);  //左边空出3个像素
+                Rectangle textRect = new Rectangle(Padding.Left, 0, Width - Padding.Horizontal, Height);   //左右留出Padding距离
                 e.Graphics.DrawString(this.Text, this.Font, new SolidBrush(this.ForeColor), textRect, format);
             }
         }

@@ -37,21 +37,24 @@
             this.tabFreeOfficeAI = this.Factory.CreateRibbonTab();
             this.group1 = this.Factory.CreateRibbonGroup();
             this.btnTool = this.Factory.CreateRibbonButton();
-            this.btnChat = this.Factory.CreateRibbonButton();
+            this.group2 = this.Factory.CreateRibbonGroup();
+            this.btnSetting = this.Factory.CreateRibbonButton();
+            this.btnAbout = this.Factory.CreateRibbonButton();
             this.tabFreeOfficeAI.SuspendLayout();
             this.group1.SuspendLayout();
+            this.group2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabFreeOfficeAI
             // 
             this.tabFreeOfficeAI.Groups.Add(this.group1);
+            this.tabFreeOfficeAI.Groups.Add(this.group2);
             this.tabFreeOfficeAI.Label = "FreeOfficeAI";
             this.tabFreeOfficeAI.Name = "tabFreeOfficeAI";
             // 
             // group1
             // 
             this.group1.Items.Add(this.btnTool);
-            this.group1.Items.Add(this.btnChat);
             this.group1.Label = "工具箱";
             this.group1.Name = "group1";
             // 
@@ -62,17 +65,29 @@
             this.btnTool.Label = "AI工具";
             this.btnTool.Name = "btnTool";
             this.btnTool.ShowImage = true;
-            this.btnTool.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BtnTool_Click);
             // 
-            // btnChat
+            // group2
             // 
-            this.btnChat.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.btnChat.Image = global::FreeOfficeAI.Excel.Properties.Resources.对话;
-            this.btnChat.Label = "对话";
-            this.btnChat.Name = "btnChat";
-            this.btnChat.ShowImage = true;
-            this.btnChat.Visible = false;
-            this.btnChat.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.BtnChat_Click);
+            this.group2.Items.Add(this.btnSetting);
+            this.group2.Items.Add(this.btnAbout);
+            this.group2.Label = "帮助";
+            this.group2.Name = "group2";
+            // 
+            // btnSetting
+            // 
+            this.btnSetting.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.btnSetting.Image = global::FreeOfficeAI.Excel.Properties.Resources.设置;
+            this.btnSetting.Label = "设置";
+            this.btnSetting.Name = "btnSetting";
+            this.btnSetting.ShowImage = true;
+            // 
+            // btnAbout
+            // 
+            this.btnAbout.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.btnAbout.Image = global::FreeOfficeAI.Excel.Properties.Resources.关于;
+            this.btnAbout.Label = "关于";
+            this.btnAbout.Name = "btnAbout";
+            this.btnAbout.ShowImage = true;
             // 
             // ExcelRibbon
             // 
@@ -84,6 +99,8 @@
             this.tabFreeOfficeAI.PerformLayout();
             this.group1.ResumeLayout(false);
             this.group1.PerformLayout();
+            this.group2.ResumeLayout(false);
+            this.group2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -93,7 +110,9 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonTab tabFreeOfficeAI;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btnTool;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton btnChat;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group2;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btnSetting;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btnAbout;
     }
 
     partial class ThisRibbonCollection

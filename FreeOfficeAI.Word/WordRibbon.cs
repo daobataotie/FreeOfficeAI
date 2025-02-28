@@ -20,12 +20,22 @@ namespace FreeOfficeAI.Word
             group1.Label = "工具箱";
 
             btnSummary.Label = "总结提炼\n";
+            btnSummary.Click += BtnSummary_Click;
             btnContractCheck.Label = "合同检查\n";
+            btnContractCheck.Click += BtnContractCheck_Click;
             btnRectify.Label = "纠错矫正\n";
+            btnRectify.Click += BtnRectify_Click;
             btnTranslate.Label = "翻译\n";
+            btnTranslate.Click += BtnTranslate_Click;
             btnChat.Label = "对话\n";
+            btnChat.Click += BtnChat_Click;
 
+
+            group2.Label = "帮助";
+            btnSetting.Label = "设置\n";
+            btnSetting.Click += BtnSetting_Click;
             btnAbout.Label = "关于\n";
+            btnAbout.Click += BtnAbout_Click;
         }
 
         private void BtnSummary_Click(object sender, RibbonControlEventArgs e)
@@ -65,7 +75,7 @@ namespace FreeOfficeAI.Word
             }
         }
 
-        private void btnTranslate_Click(object sender, RibbonControlEventArgs e)
+        private void BtnTranslate_Click(object sender, RibbonControlEventArgs e)
         {
             var customTaskPane = GetTaskPane(typeof(UCTask));
 
@@ -80,6 +90,26 @@ namespace FreeOfficeAI.Word
         private void BtnChat_Click(object sender, RibbonControlEventArgs e)
         {
             var customTaskPane = GetTaskPane(typeof(UCChat));
+        }
+
+        private void BtnAbout_Click(object sender, RibbonControlEventArgs e)
+        {
+            var version = Assembly.GetExecutingAssembly().GetName().Version;
+            AppInfo appInfo = new AppInfo()
+            {
+                ProductName = "FreeOfficeAI-Word插件",
+                Version = $"{version.Major}.{version.Minor}.{version.Build}",
+                Author = "曹瑞",
+                Description = "    本插件调用本地大模型，实现文档分析、合同审核、纠错矫正、翻译、对话等功能。\r\n    目前为第一版，功能还在完善中，将持续更新。\r\n    使用说明：点击按钮时，默认处理选中文本，若无选中文本，则处理整篇文档\r\n\r\n",
+            };
+            FrmAbout frmAbout = new FrmAbout(appInfo);
+            frmAbout.ShowDialog();
+        }
+
+        private void BtnSetting_Click(object sender, RibbonControlEventArgs e)
+        {
+            FrmSetting frmSetting = new FrmSetting();
+            frmSetting.ShowDialog();
         }
 
         private CustomTaskPane GetTaskPane(Type controlType)
@@ -145,18 +175,5 @@ namespace FreeOfficeAI.Word
             return customTaskPane;
         }
 
-        private void btnAbout_Click(object sender, RibbonControlEventArgs e)
-        {
-            var version = Assembly.GetExecutingAssembly().GetName().Version;
-            AppInfo appInfo = new AppInfo()
-            {
-                ProductName = "FreeOfficeAI-Word插件",
-                Version = $"{version.Major}.{version.Minor}.{version.Build}",
-                Author = "曹瑞",
-                Description = "    本插件调用本地大模型，实现文档分析、合同审核、纠错矫正、翻译、对话等功能。\r\n    目前为第一版，功能还在完善中，将持续更新。\r\n    使用说明：点击按钮时，默认处理选中文本，若无选中文本，则处理整篇文档\r\n\r\n邮箱：844309084@qq.com",
-            };
-            FrmAbout frmAbout = new FrmAbout(appInfo);
-            frmAbout.ShowDialog();
-        }
     }
 }
