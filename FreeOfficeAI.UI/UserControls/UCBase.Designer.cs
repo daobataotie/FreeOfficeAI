@@ -30,8 +30,9 @@
         {
             this.panelMessage = new System.Windows.Forms.Panel();
             this.splitContainerControl1 = new System.Windows.Forms.SplitContainer();
-            this.btnSend = new System.Windows.Forms.Button();
             this.txtInput = new System.Windows.Forms.TextBox();
+            this.btnClean = new System.Windows.Forms.Button();
+            this.btnSend = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
             this.splitContainerControl1.Panel1.SuspendLayout();
             this.splitContainerControl1.Panel2.SuspendLayout();
@@ -61,20 +62,12 @@
             // splitContainerControl1.Panel2
             // 
             this.splitContainerControl1.Panel2.Controls.Add(this.btnSend);
+            this.splitContainerControl1.Panel2.Controls.Add(this.btnClean);
             this.splitContainerControl1.Panel2.Controls.Add(this.txtInput);
             this.splitContainerControl1.Panel2.Text = "Panel2";
             this.splitContainerControl1.Size = new System.Drawing.Size(400, 800);
             this.splitContainerControl1.SplitterDistance = 650;
             this.splitContainerControl1.TabIndex = 2;
-            // 
-            // btnSend
-            // 
-            this.btnSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSend.Location = new System.Drawing.Point(322, 121);
-            this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(75, 23);
-            this.btnSend.TabIndex = 1;
-            this.btnSend.Text = "发送";
             // 
             // txtInput
             // 
@@ -86,6 +79,34 @@
             this.txtInput.Name = "txtInput";
             this.txtInput.Size = new System.Drawing.Size(400, 120);
             this.txtInput.TabIndex = 0;
+            // 
+            // btnClean
+            // 
+            this.btnClean.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClean.BackColor = System.Drawing.Color.Transparent;
+            this.btnClean.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightBlue;
+            this.btnClean.FlatAppearance.MouseOverBackColor = System.Drawing.Color.AliceBlue;
+            this.btnClean.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClean.Location = new System.Drawing.Point(241, 121);
+            this.btnClean.Name = "btnClean";
+            this.btnClean.Size = new System.Drawing.Size(75, 23);
+            this.btnClean.TabIndex = 3;
+            this.btnClean.Text = "清除对话";
+            this.btnClean.UseVisualStyleBackColor = false;
+            // 
+            // btnSend
+            // 
+            this.btnSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSend.BackColor = System.Drawing.Color.Transparent;
+            this.btnSend.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightBlue;
+            this.btnSend.FlatAppearance.MouseOverBackColor = System.Drawing.Color.AliceBlue;
+            this.btnSend.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSend.Location = new System.Drawing.Point(322, 121);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(75, 23);
+            this.btnSend.TabIndex = 4;
+            this.btnSend.Text = "发送";
+            this.btnSend.UseVisualStyleBackColor = false;
             // 
             // UCBase
             // 
@@ -107,7 +128,8 @@
 
         public System.Windows.Forms.Panel panelMessage;
         public System.Windows.Forms.SplitContainer splitContainerControl1;
-        public System.Windows.Forms.Button btnSend;
         public System.Windows.Forms.TextBox txtInput;
+        public System.Windows.Forms.Button btnClean;
+        public System.Windows.Forms.Button btnSend;
     }
 }

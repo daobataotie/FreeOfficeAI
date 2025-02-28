@@ -15,10 +15,7 @@ namespace FreeOfficeAI.UI.UserControls
 {
     public partial class UCTool : UCBase
     {
-        private bool done = true;
-        OllamaRequest request = new OllamaRequest();
-
-        private static List<string> keyWordsSelection = new List<string>() { "选", "点击", "部分" };
+        private static List<string> keyWordsSelection = new List<string>() { "选", "点击" };
         private static List<string> keyWordsAll = new List<string>() { "整个", "全部", "整张", "所有" };
 
         public UCTool(Action<string> insertOffice, Func<string, bool> exeVBA, Func<bool, string> getContent)
@@ -81,9 +78,9 @@ namespace FreeOfficeAI.UI.UserControls
                             var ollamaMessage = request.Messages;
                             if (ollamaMessage == null || ollamaMessage.Count == 0)
                             {
-                                bool getSelectionExcel = true;
-                                if (keyWordsAll.Any(k => message.Contains(k)) && !keyWordsSelection.Any(k => message.Contains(k)))
-                                    getSelectionExcel = false;
+                                bool getSelectionExcel = false;  // 默认读取全部Excel数据
+                                if (/*!keyWordsAll.Any(k => message.Contains(k)) && */keyWordsSelection.Any(k => message.Contains(k)))
+                                    getSelectionExcel = true;
 
                                 var excelContent = getExcelContent(getSelectionExcel);
                                 message += "，Excel数据：" + excelContent;

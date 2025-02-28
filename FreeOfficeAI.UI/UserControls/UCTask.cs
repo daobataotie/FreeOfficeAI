@@ -14,9 +14,6 @@ namespace FreeOfficeAI.UI.UserControls
 {
     public partial class UCTask : UCBase
     {
-        private bool done = true;
-        OllamaRequest request = new OllamaRequest();
-
         public UCTask(Action<string> insertOffice, Func<string> getContent)
         {
             InitializeComponent();

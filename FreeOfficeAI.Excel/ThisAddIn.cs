@@ -7,6 +7,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 using Office = Microsoft.Office.Core;
 using Microsoft.Office.Tools.Excel;
 using System.Text.Json;
+using FreeOfficeAI.UI.UserControls;
 
 namespace FreeOfficeAI.Excel
 {
@@ -14,10 +15,23 @@ namespace FreeOfficeAI.Excel
     {
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
+            this.Application.WorkbookBeforeClose += Application_WorkbookBeforeClose;
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
+        }
+
+        private void Application_WorkbookBeforeClose(Microsoft.Office.Interop.Excel.Workbook Wb, ref bool Cancel)
+        {
+            foreach (var task in this.CustomTaskPanes)
+            {
+                if (task.Control is UCBase uc)
+                {
+                    uc.Visible = false;
+                    uc.Dispose();
+                }
+            }
         }
 
         public void InsertToExcelHandler(string content)

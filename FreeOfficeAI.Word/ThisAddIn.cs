@@ -10,6 +10,7 @@ using Microsoft.Office.Interop.Word;
 using Microsoft.Office.Core;
 using System.Runtime.InteropServices;
 using FreeOfficeAI.Core;
+using FreeOfficeAI.UI.UserControls;
 
 namespace FreeOfficeAI.Word
 {
@@ -22,7 +23,9 @@ namespace FreeOfficeAI.Word
         {
             //todo 发现在安装后无法调出右键菜单，但是Debug可以
             //右击前创建右键菜单
-            Application.WindowBeforeRightClick += Application_WindowBeforeRightClick;
+            //Application.WindowBeforeRightClick += Application_WindowBeforeRightClick;
+
+            Application.DocumentBeforeClose += Application_DocumentBeforeClose;
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
@@ -31,6 +34,18 @@ namespace FreeOfficeAI.Word
 
             // 清理旧菜单项
             CleanExistingMenu(contextMenu);
+        }
+
+        private void Application_DocumentBeforeClose(Microsoft.Office.Interop.Word.Document Doc, ref bool Cancel)
+        {
+            foreach (var task in this.CustomTaskPanes)
+            {
+                if (task.Control is UCBase uc)
+                {
+                    uc.Visible = false;
+                    uc.Dispose();
+                }
+            }
         }
 
         private void Application_WindowBeforeRightClick(Selection Sel, ref bool Cancel)

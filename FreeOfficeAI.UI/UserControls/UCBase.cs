@@ -1,4 +1,5 @@
-﻿using FreeOfficeAI.UI.CustomControls;
+﻿using FreeOfficeAI.Core;
+using FreeOfficeAI.UI.CustomControls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,6 +23,8 @@ namespace FreeOfficeAI.UI.UserControls
         public Func<string, bool> executeVBA;
 
         public RoundedLabel lastControl = null;
+        public bool done = true;
+        public OllamaRequest request = new OllamaRequest();
 
         public UCBase()
         {
@@ -38,6 +41,7 @@ namespace FreeOfficeAI.UI.UserControls
 
             txtInput.KeyDown += TxtInput_KeyDown; // 绑定 KeyDown 事件
             btnSend.Click += SendButton_Click;
+            btnClean.Click += BtnClean_Click;
         }
 
         /// <summary>
@@ -65,6 +69,19 @@ namespace FreeOfficeAI.UI.UserControls
         private void SendButton_Click(object sender, EventArgs e)
         {
             SendRequest();
+        }
+
+        /// <summary>
+        /// 清除按钮点击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnClean_Click(object sender, EventArgs e)
+        {
+            request = new OllamaRequest();
+
+            panelMessage.Controls.Clear();
+            lastControl = null;
         }
 
         /// <summary>

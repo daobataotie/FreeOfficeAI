@@ -14,9 +14,6 @@ namespace FreeOfficeAI.UI.UserControls
 {
     public partial class UCChat : UCBase
     {
-        private bool done = true;
-        OllamaRequest request = new OllamaRequest();
-
         public UCChat(Action<string> insertOffice)
         {
             InitializeComponent();
