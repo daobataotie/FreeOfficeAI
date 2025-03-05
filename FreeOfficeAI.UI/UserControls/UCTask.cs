@@ -69,20 +69,18 @@ namespace FreeOfficeAI.UI.UserControls
             txtInput.SelectionStart = 0;
             txtInput.Focus();
 
-            //第一次请求，生成系统消息和用户消息
+            //第一次请求，创建用户消息。后续请求，追加用户消息
             if (request.Messages == null || request.Messages.Count == 0)
-            {
                 request.Messages = new List<OllamaMessage>()
                 {
                     new OllamaMessage { Role = "user", Content = message },
                 };
-            }
             else
                 request.Messages.Add(new OllamaMessage
                 {
                     Role = "user",
                     Content = message
-                });    // 后续请求，追加用户消息
+                });
 
             GetResponse();
         }

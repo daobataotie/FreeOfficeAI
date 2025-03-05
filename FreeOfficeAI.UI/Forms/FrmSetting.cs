@@ -52,12 +52,11 @@ namespace FreeOfficeAI.UI.Forms
         {
             if (cobFrame.SelectedItem?.ToString() == LLMFrame.Ollama.ToString())
             {
-                //cobFrame.Items.Clear();
-                //cobFrame.Items.Add("deepseek-r1:14b");
-                //cobFrame.Items.Add("codellama:34b");
-                //cobFrame.Items.Add("qwen2.5-coder:32b");
-
-                //todo 动态读取模型列表
+                //读取模型列表
+                //if (!string.IsNullOrWhiteSpace(txtAddress.Text))
+                //{
+                //    var names = OllamaApi.GetModelList(txtAddress.Text);
+                //}
             }
         }
 
@@ -78,14 +77,15 @@ namespace FreeOfficeAI.UI.Forms
                 MessageBox.Show(errorMsg, "保存成功！");
         }
 
-        private async void btnConnTestLocal_Click(object sender, EventArgs e)
+        private void btnConnTestLocal_Click(object sender, EventArgs e)
         {
             if (!ValidateControls())
                 return;
 
             try
             {
-                if (await OllamaApi.TestConnection(txtAddress.Text, cobModelName.Text))
+                //以同步方式阻塞UI，防止点击测试后，关闭设置页面
+                if (OllamaApi.TestConnection(txtAddress.Text, cobModelName.Text).Result)
                 {
                     MessageBox.Show("连接成功！");
                 }
@@ -94,12 +94,16 @@ namespace FreeOfficeAI.UI.Forms
                     MessageBox.Show("连接失败！");
                 }
             }
-            catch (Exception ex)
+            catch (AggregateException ex)
             {
-                if (ex is TaskCanceledException tce && tce.CancellationToken.IsCancellationRequested)
+                if (ex.InnerExceptions[0] is TaskCanceledException tce && tce.CancellationToken.IsCancellationRequested)
                     MessageBox.Show("请求超时！", "连接失败");
                 else
-                    MessageBox.Show(ex.Message, "连接失败");
+                    MessageBox.Show(ex.InnerExceptions[0].Message, "连接失败");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "连接失败");
             }
         }
 

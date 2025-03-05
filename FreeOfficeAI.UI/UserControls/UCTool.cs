@@ -59,14 +59,21 @@ namespace FreeOfficeAI.UI.UserControls
                         bool isChat = rdoBtnChat.Checked;
                         if (isChat)
                         {
-                            request = new OllamaRequest()
-                            {
-                                Prompt = message,
-                                Context = request.Context
-                            };
+                            //第一次请求，创建用户消息。后续请求，追加用户消息
+                            if (request.Messages == null || request.Messages.Count == 0)
+                                request.Messages = new List<OllamaMessage>()
+                                {
+                                    new OllamaMessage { Role = "user", Content = message },
+                                };
+                            else
+                                request.Messages.Add(new OllamaMessage
+                                {
+                                    Role = "user",
+                                    Content = message
+                                });
 
                             // 读取流式响应
-                            await foreach (var responsePart in OllamaApi.GetGenerateStreamAsync(request))
+                            await foreach (var responsePart in OllamaApi.GetChatStreamAsync(request))
                             {
                                 UpdateMessage(responsePart);
                             }

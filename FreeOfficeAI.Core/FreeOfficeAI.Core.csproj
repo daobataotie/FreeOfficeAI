@@ -80,6 +80,7 @@
     <Compile Include="OllamaMessage.cs" />
     <Compile Include="OllamaRequest.cs" />
     <Compile Include="OllamaResponse.cs" />
+    <Compile Include="OllamaTags.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

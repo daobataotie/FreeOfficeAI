@@ -21,7 +21,7 @@ namespace FreeOfficeAI.Core
         {
             try
             {
-                HttpResponseMessage response = await GetResponseGenerate(request, false);
+                using HttpResponseMessage response = await GetResponseGenerate(request, false);
 
                 var responseContent = await response.Content.ReadAsStringAsync();
                 var ollamaResponse = JsonSerializer.Deserialize<OllamaResponse>(responseContent);
@@ -44,7 +44,7 @@ namespace FreeOfficeAI.Core
         /// <returns></returns>
         public static async IAsyncEnumerable<string> GetGenerateStreamAsync(OllamaRequest request)
         {
-            HttpResponseMessage response = await GetResponseGenerate(request, true);
+            using HttpResponseMessage response = await GetResponseGenerate(request, true);
 
             using var stream = await response.Content.ReadAsStreamAsync();
             using var reader = new System.IO.StreamReader(stream);
@@ -136,6 +136,62 @@ namespace FreeOfficeAI.Core
         }
 
         /// <summary>
+        /// 获取已安装模型列表
+        /// </summary>
+        /// <param name="apiUrl"></param>
+        /// <returns></returns>
+        public static async Task<List<string>> GetInstalledModelList(string apiUrl)
+        {
+            var names = new List<string>();
+            using var response = await client.GetAsync(apiUrl + "/api/tags").ConfigureAwait(false);
+            if (response.IsSuccessStatusCode)
+            {
+                var json = response.Content.ReadAsStringAsync();
+
+                var result = JsonSerializer.Deserialize<OllamaTags>(json.Result);
+
+                // 输出模型名称
+                if (result != null && result.Models?.Count() > 0)
+                {
+                    foreach (var model in result.Models)
+                    {
+                        names.Add(model.Name);
+                    }
+                }
+            }
+
+            return names;
+        }
+
+        /// <summary>
+        /// 获取运行中的模型列表
+        /// </summary>
+        /// <param name="apiUrl"></param>
+        /// <returns></returns>
+        public static async Task<List<string>> GetRunningModelList(string apiUrl)
+        {
+            var names = new List<string>();
+            using var response = await client.GetAsync(apiUrl + "/api/ps").ConfigureAwait(false);
+            if (response.IsSuccessStatusCode)
+            {
+                var json = response.Content.ReadAsStringAsync();
+
+                var result = JsonSerializer.Deserialize<OllamaTags>(json.Result);
+
+                // 输出模型名称
+                if (result != null && result.Models?.Count() > 0)
+                {
+                    foreach (var model in result.Models)
+                    {
+                        names.Add(model.Name);
+                    }
+                }
+            }
+
+            return names;
+        }
+
+        /// <summary>
         /// 测试连接
         /// </summary>
         /// <param name="apiUrl">地址</param>
@@ -153,12 +209,8 @@ namespace FreeOfficeAI.Core
             var json = JsonSerializer.Serialize(requestData);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync(apiUrl + "/api/generate", content);
+            using var response = await client.PostAsync(apiUrl + "/api/generate", content);
             response.EnsureSuccessStatusCode();
-
-            // 释放资源
-            content.Dispose();
-            response.Dispose();
 
             return true;
         }
