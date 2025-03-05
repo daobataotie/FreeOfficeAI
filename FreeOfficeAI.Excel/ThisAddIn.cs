@@ -8,18 +8,50 @@ using Office = Microsoft.Office.Core;
 using Microsoft.Office.Tools.Excel;
 using System.Text.Json;
 using FreeOfficeAI.UI.UserControls;
+using Microsoft.Office.Core;
+using System.Runtime.InteropServices;
+using Microsoft.Office.Interop.Excel;
+using System.Windows.Forms;
 
 namespace FreeOfficeAI.Excel
 {
     public partial class ThisAddIn
     {
+        //右键菜单，定义为全局变量。若定义在ThisAddIn_Startup中，会出现菜单点击事件开始能响应，多点几次后不响应，怀疑是被释放了。
+        private CommandBarPopup menuGroup = null;
+        private CommandBarButton button = null;
+
+
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             this.Application.WorkbookBeforeClose += Application_WorkbookBeforeClose;
+
+            CreateMenu();
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
+            //if (button != null)
+            //{
+            //    Marshal.ReleaseComObject(button);
+            //    button = null;
+            //}
+            //if (menuGroup != null)
+            //{
+            //    Marshal.ReleaseComObject(menuGroup);
+            //    menuGroup = null;
+            //}
+
+            //循环父级菜单项，删除自定义菜单。直接删除自定义会报错，猜测可能是卸载插件或者关闭Word时，menuGroup已经被释放了。
+            foreach (CommandBarControl control in Application.CommandBars["Text"].Controls)
+            {
+                if (control.Tag == "FreeOfficeAIMenu")
+                {
+                    control.Delete(false);
+                    Marshal.FinalReleaseComObject(control);
+                    break;
+                }
+            }
         }
 
         private void Application_WorkbookBeforeClose(Microsoft.Office.Interop.Excel.Workbook Wb, ref bool Cancel)
@@ -32,6 +64,33 @@ namespace FreeOfficeAI.Excel
                     uc.Dispose();
                 }
             }
+        }
+
+        private void CreateMenu()
+        {
+            // 创建菜单组
+            menuGroup = (CommandBarPopup)Application.CommandBars["Cell"].Controls.Add(MsoControlType.msoControlPopup, Temporary: true); // 使用临时菜单项
+            menuGroup.Caption = "FreeOfficeAI";
+            menuGroup.Tag = "FreeOfficeAIMenu";
+
+            // 在菜单组中添加子菜单项
+            button = (CommandBarButton)menuGroup.Controls.Add(MsoControlType.msoControlButton, Temporary: true);
+            button.Caption = "测试";
+            button.Click += TranslateButton_Click;
+        }
+
+        private void TranslateButton_Click(CommandBarButton Ctrl, ref bool CancelDefault)
+        {
+            Range contentRange = Globals.ThisAddIn.Application.Selection as Range;
+            StringBuilder sb = new StringBuilder();
+            foreach (Range item in contentRange.Cells)
+            {
+                if (!string.IsNullOrWhiteSpace(item.Value))
+                    sb.Append(item.Value + " ");
+            }
+            string content = sb.ToString().Trim();
+            if (!string.IsNullOrWhiteSpace(content))
+                MessageBox.Show(content);
         }
 
         public void InsertToExcelHandler(string content)

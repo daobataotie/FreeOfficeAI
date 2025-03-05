@@ -75,14 +75,14 @@ namespace FreeOfficeAI.Word
             }
         }
 
-        private void BtnTranslate_Click(object sender, RibbonControlEventArgs e)
+        internal void BtnTranslate_Click(object sender, RibbonControlEventArgs e)
         {
             var customTaskPane = GetTaskPane(typeof(UCTask));
 
             if (customTaskPane != null && customTaskPane.Visible)
             {
-                string systemContent = "你是一位语言专家，精通中文和其他多种语言，能自动识别内容语言，若为中文则翻译成英文，非中文则翻译成中文。";
-                string userContent = "请翻译以下内容，不需要思考过程，不需要解释，直接翻译并给出结果：";
+                string systemContent = "你是一位语言专家，精通中文和其他多种语言，能自动识别内容中的语言，若为中文则翻译成英文，非中文则翻译成中文。";
+                string userContent = "请翻译以下内容：";
                 (customTaskPane.Control as UCTask).Send(systemContent, userContent, "翻译");
             }
         }
