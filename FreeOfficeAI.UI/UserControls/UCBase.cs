@@ -22,9 +22,11 @@ namespace FreeOfficeAI.UI.UserControls
 
         public Func<string, bool> executeVBA;
 
-        public RoundedLabel lastControl = null;
+        public Control lastControl = null;
         public bool done = true;
         public OllamaRequest request = new OllamaRequest();
+
+        private Timer scrollTimer;
 
         public UCBase()
         {
@@ -42,6 +44,36 @@ namespace FreeOfficeAI.UI.UserControls
             txtInput.KeyDown += TxtInput_KeyDown; // 绑定 KeyDown 事件
             btnSend.Click += SendButton_Click;
             btnClean.Click += BtnClean_Click;
+
+            scrollTimer = new Timer();
+            scrollTimer.Interval = 100; // 100毫秒的间隔
+            scrollTimer.Tick += ScrollTimer_Tick;
+        }
+
+        /// <summary>
+        /// 更新消息时，滚动panel。解决消息过长时无法实时滚动到底部的问题。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ScrollTimer_Tick(object sender, EventArgs e)
+        {
+            if (panelMessage.VerticalScroll.Visible)
+            {
+                // 计算需要滚动的位置
+                Point point = panelMessage.AutoScrollPosition;
+                int targetY = Math.Abs(point.Y);
+                int maxScroll = panelMessage.DisplayRectangle.Height - panelMessage.ClientSize.Height;
+
+                if (targetY < maxScroll)
+                {
+                    targetY = Math.Min(targetY + 30, maxScroll); // 每次滚动30个像素
+                    panelMessage.AutoScrollPosition = new Point(0, targetY);
+                }
+                else
+                {
+                    scrollTimer.Stop();
+                }
+            }
         }
 
         /// <summary>
@@ -99,9 +131,10 @@ namespace FreeOfficeAI.UI.UserControls
         /// <param name="isSelf">是否为自己发送的消息</param>
         protected void AddMessage(string content, bool isSelf)
         {
-            RoundedLabel messageLabel = new RoundedLabel();
-            messageLabel.Text = content;
-            messageLabel.BackColor = isSelf ? Color.FromArgb(137, 217, 97) : Color.Snow;
+            //RoundedLabel messageLabel = new RoundedLabel();
+            RoundedRichTextBox messageControl = new RoundedRichTextBox();
+            messageControl.Text = content;
+            messageControl.BackColor = isSelf ? Color.FromArgb(137, 217, 97) : Color.Snow;
 
             PictureBox avatarBox = new PictureBox();
             avatarBox.Size = new Size(25, 25);
@@ -113,37 +146,37 @@ namespace FreeOfficeAI.UI.UserControls
 
             if (isSelf)
             {
-                messageLabel.Location = new Point(panelMessage.Width / 2, y);
-                messageLabel.Width = panelMessage.Width / 2 - 50;
+                messageControl.Location = new Point(panelMessage.Width / 2, y);
+                messageControl.Width = panelMessage.Width / 2 - 50;
                 //messageLabel.Location = new Point(180, y);
                 //messageLabel.Width = 140;
 
-                messageLabel.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
+                messageControl.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
 
                 avatarBox.Image = Properties.Resources.User;
-                avatarBox.Location = new Point(panelMessage.Width - 45, messageLabel.Top);
+                avatarBox.Location = new Point(panelMessage.Width - 45, messageControl.Top);
                 avatarBox.Anchor = AnchorStyles.Right | AnchorStyles.Top;
             }
             else
             {
-                messageLabel.Location = new Point(40, y);
-                messageLabel.Width = panelMessage.Width - 90;
+                messageControl.Location = new Point(40, y);
+                messageControl.Width = panelMessage.Width - 90;
                 //messageLabel.Location = new Point(50, y);
                 //messageLabel.Width = 270;
 
-                messageLabel.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
+                messageControl.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
 
                 avatarBox.Image = Properties.Resources.AI;
-                avatarBox.Location = new Point(5, messageLabel.Top);
+                avatarBox.Location = new Point(5, messageControl.Top);
                 avatarBox.Anchor = AnchorStyles.Left | AnchorStyles.Top;
 
             }
 
-            lastControl = messageLabel;
+            lastControl = messageControl;
 
-            panelMessage.Controls.Add(messageLabel);
+            panelMessage.Controls.Add(messageControl);
             panelMessage.Controls.Add(avatarBox);
-            panelMessage.ScrollControlIntoView(messageLabel);
+            panelMessage.ScrollControlIntoView(messageControl);
         }
 
         /// <summary>
@@ -160,10 +193,6 @@ namespace FreeOfficeAI.UI.UserControls
                     UpdateMessage(content, isAppend);
                 }));
 
-                panelMessage.Invoke(new Action(() =>
-                {
-                    panelMessage.ScrollControlIntoView(lastControl);
-                }));
             }
             else
             {
@@ -175,19 +204,42 @@ namespace FreeOfficeAI.UI.UserControls
                 else
                     lastControl.Text = content;
 
-                using (Graphics g = lastControl.CreateGraphics())
+                if (lastControl is RoundedRichTextBox rtb)
                 {
-                    SizeF textSize = g.MeasureString(lastControl.Text, lastControl.Font, lastControl.Width - lastControl.Padding.Horizontal);
-
-                    // 设置控件的高度，考虑 Padding 的影响
-                    lastControl.Height = (int)textSize.Height + lastControl.Padding.Vertical + 1;
+                    // 对于RoundedRichTextBox，使用其专门的高度调整方法
+                    rtb.AdjustHeight();
                 }
 
-                panelMessage.ScrollControlIntoView(lastControl);
-                //panelMessage.VerticalScroll.Value = panelMessage.VerticalScroll.Maximum;
+                // 启动滚动计时器
+                if (!scrollTimer.Enabled)
+                {
+                    scrollTimer.Start();
+                }
 
                 Application.DoEvents(); // 更新 UI
             }
+        }
+
+
+        protected void UpdateStatus()
+        {
+            done = true;
+
+            if (btnSend.InvokeRequired)
+                btnSend.Invoke(new Action(() =>
+                {
+                    btnSend.Enabled = true;
+                }));
+            else
+                btnSend.Enabled = true;
+
+            if (btnClean.InvokeRequired)
+                btnClean.Invoke(new Action(() =>
+                {
+                    btnClean.Enabled = true;
+                }));
+            else
+                btnClean.Enabled = true;
         }
 
         /// <summary>

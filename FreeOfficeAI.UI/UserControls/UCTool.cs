@@ -13,6 +13,8 @@ using System.Windows.Forms;
 
 namespace FreeOfficeAI.UI.UserControls
 {
+    //用于Excel表格公式处理还有问题，暂时不建议使用
+
     public partial class UCTool : UCBase
     {
         private static List<string> keyWordsSelection = new List<string>() { "选", "点击" };
@@ -32,6 +34,8 @@ namespace FreeOfficeAI.UI.UserControls
 
         protected override void SendRequest()
         {
+            //todo VBA 报错处理
+
             if (!done)
                 return;
 
@@ -48,6 +52,7 @@ namespace FreeOfficeAI.UI.UserControls
 
             done = false;
             btnSend.Enabled = false;
+            btnClean.Enabled = false;
 
             try
             {
@@ -132,15 +137,7 @@ namespace FreeOfficeAI.UI.UserControls
                     }
                     finally
                     {
-                        done = true;
-
-                        if (btnSend.InvokeRequired)
-                            btnSend.Invoke(new Action(() =>
-                            {
-                                btnSend.Enabled = true;
-                            }));
-                        else
-                            btnSend.Enabled = true;
+                        UpdateStatus();
                     }
                 });
             }

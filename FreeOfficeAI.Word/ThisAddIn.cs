@@ -23,21 +23,21 @@ namespace FreeOfficeAI.Word
         {
             Application.DocumentBeforeClose += Application_DocumentBeforeClose;
 
-            CreateMenu();
+            //CreateMenu();  //todo 右键还有BUG，暂时注释
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
-            //循环父级菜单项，删除自定义菜单。直接删除自定义会报错，猜测可能是卸载插件或者关闭Word时，menuGroup已经被释放了。
-            foreach (CommandBarControl control in Application.CommandBars["Text"].Controls)
-            {
-                if (control.Tag == "FreeOfficeAIMenu")
-                {
-                    control.Delete(false);
-                    Marshal.FinalReleaseComObject(control);
-                    break;
-                }
-            }
+            ////循环父级菜单项，删除自定义菜单。直接删除自定义会报错，猜测可能是卸载插件或者关闭Word时，menuGroup已经被释放了。
+            //foreach (CommandBarControl control in Application.CommandBars["Text"].Controls)
+            //{
+            //    if (control.Tag == "FreeOfficeAIMenu")
+            //    {
+            //        control.Delete(false);
+            //        Marshal.FinalReleaseComObject(control);
+            //        break;
+            //    }
+            //}
         }
 
         private void Application_DocumentBeforeClose(Microsoft.Office.Interop.Word.Document Doc, ref bool Cancel)

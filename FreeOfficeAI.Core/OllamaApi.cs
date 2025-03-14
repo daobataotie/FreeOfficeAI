@@ -209,7 +209,13 @@ namespace FreeOfficeAI.Core
             var json = JsonSerializer.Serialize(requestData);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            using var response = await client.PostAsync(apiUrl + "/api/generate", content);
+            // 创建请求消息
+            var httpRequest = new HttpRequestMessage(HttpMethod.Post, apiUrl + "/api/chat")
+            {
+                Content = content
+            };
+
+            using var response = await client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
 
             return true;
@@ -229,7 +235,13 @@ namespace FreeOfficeAI.Core
             var json = JsonSerializer.Serialize(requestData);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync(ConfigSetting.GetSetting().ApiUrl + "/api/generate", content);
+            // 创建请求消息
+            var httpRequest = new HttpRequestMessage(HttpMethod.Post, ConfigSetting.GetSetting().ApiUrl + "/api/generate")
+            {
+                Content = content
+            };
+
+            var response = await client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead);
             response.EnsureSuccessStatusCode();
             return response;
         }
@@ -245,7 +257,14 @@ namespace FreeOfficeAI.Core
 
             var json = JsonSerializer.Serialize(requestData);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync(ConfigSetting.GetSetting().ApiUrl + "/api/chat", content);
+
+            // 创建请求消息
+            var httpRequest = new HttpRequestMessage(HttpMethod.Post, ConfigSetting.GetSetting().ApiUrl + "/api/chat")
+            {
+                Content = content
+            };
+
+            var response = await client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead);
             response.EnsureSuccessStatusCode();
             return response;
         }

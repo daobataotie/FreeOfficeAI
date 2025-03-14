@@ -91,6 +91,7 @@ namespace FreeOfficeAI.UI.UserControls
             {
                 done = false;
                 btnSend.Enabled = false;
+                btnClean.Enabled = false;
 
                 AddMessage("思考中...", false); // 返回的消息
                 Task.Run(async () =>
@@ -114,15 +115,7 @@ namespace FreeOfficeAI.UI.UserControls
                     }
                     finally
                     {
-                        done = true;
-
-                        if (btnSend.InvokeRequired)
-                            btnSend.Invoke(new Action(() =>
-                            {
-                                btnSend.Enabled = true;
-                            }));
-                        else
-                            btnSend.Enabled = true;
+                        UpdateStatus();
                     }
                 });
 

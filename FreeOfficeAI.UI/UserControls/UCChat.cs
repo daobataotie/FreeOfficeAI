@@ -39,6 +39,7 @@ namespace FreeOfficeAI.UI.UserControls
 
             done = false;
             btnSend.Enabled = false;
+            btnClean.Enabled = false;
 
             try
             {
@@ -77,15 +78,7 @@ namespace FreeOfficeAI.UI.UserControls
                     }
                     finally
                     {
-                        done = true;
-
-                        if (btnSend.InvokeRequired)
-                            btnSend.Invoke(new Action(() =>
-                            {
-                                btnSend.Enabled = true;
-                            }));
-                        else
-                            btnSend.Enabled = true;
+                        UpdateStatus();
                     }
                 });
             }

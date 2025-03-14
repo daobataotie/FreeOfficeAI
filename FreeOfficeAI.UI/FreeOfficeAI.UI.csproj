@@ -58,6 +58,9 @@
     <Compile Include="CustomControls\RoundedLabel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="CustomControls\RoundedRichTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\FrmAbout.cs">
       <SubType>Form</SubType>
     </Compile>
