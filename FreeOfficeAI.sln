@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeOfficeAI.Excel", "FreeO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeOfficeAI.Word", "FreeOfficeAI.Word\FreeOfficeAI.Word.csproj", "{9BD5ECD9-28EB-4755-8D5C-1E2C661E8DAF}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{D1F47D76-F34E-D05F-3336-363FDFD89C9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Setup.Library", "Setup.Library\Setup.Library.csproj", "{45F51C96-2C96-483F-A1FC-D9D518F27B38}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,8 +37,17 @@ Global
 		{9BD5ECD9-28EB-4755-8D5C-1E2C661E8DAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BD5ECD9-28EB-4755-8D5C-1E2C661E8DAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BD5ECD9-28EB-4755-8D5C-1E2C661E8DAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1F47D76-F34E-D05F-3336-363FDFD89C9C}.Debug|Any CPU.ActiveCfg = Debug
+		{D1F47D76-F34E-D05F-3336-363FDFD89C9C}.Release|Any CPU.ActiveCfg = Release
+		{45F51C96-2C96-483F-A1FC-D9D518F27B38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45F51C96-2C96-483F-A1FC-D9D518F27B38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45F51C96-2C96-483F-A1FC-D9D518F27B38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45F51C96-2C96-483F-A1FC-D9D518F27B38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EEBB6CD5-00B9-4136-8F12-4682AE661B0E}
 	EndGlobalSection
 EndGlobal
