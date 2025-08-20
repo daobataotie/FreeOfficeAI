@@ -82,6 +82,7 @@
     <Compile Include="OllamaResponse.cs" />
     <Compile Include="OllamaTags.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VllmApi.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
