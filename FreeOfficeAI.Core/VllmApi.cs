@@ -11,15 +11,16 @@ using System.Threading.Tasks;
 namespace FreeOfficeAI.Core
 {
     public class VllmApi
-    { /// <summary>
-      /// 测试与OpenAI API的连接
-      /// </summary>
-      /// <param name="apiUrl">API基础URL</param>
-      /// <param name="apiKey">OpenAI API密钥</param>
-      /// <param name="modelName">模型名称</param>
-      /// <param name="cancellationToken">取消令牌</param>
-      /// <returns>连接是否成功</returns>
-        public static async Task<bool> TestConnection(string apiUrl, string modelName, CancellationToken cancellationToken)
+    {
+        /// <summary>
+        /// 测试与OpenAI API的连接
+        /// </summary>
+        /// <param name="apiUrl">API基础URL</param>
+        /// <param name="apiKey">OpenAI API密钥</param>
+        /// <param name="modelName">模型名称</param>
+        /// <param name="cancellationToken">取消令牌</param>
+        /// <returns>连接是否成功</returns>
+        public static async Task<bool> TestConnection(string apiUrl, string modelName)
         {
             var requestData = new
             {
@@ -40,8 +41,8 @@ namespace FreeOfficeAI.Core
                 Content = content
             };
 
-            var client = CreateHttpClient(60);
-            using var response = await client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+            var client = CreateHttpClient(30);
+            using var response = await client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
 
             return true;

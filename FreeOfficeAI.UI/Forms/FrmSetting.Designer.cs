@@ -32,6 +32,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.btnSaveModel = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnConnTestLocal = new System.Windows.Forms.Button();
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -40,7 +41,6 @@
             this.cobModelName = new System.Windows.Forms.ComboBox();
             this.rdbApiKey = new System.Windows.Forms.RadioButton();
             this.rdbLocal = new System.Windows.Forms.RadioButton();
-            this.btnConnTestLocal = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -93,6 +93,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(353, 100);
             this.panel1.TabIndex = 6;
+            // 
+            // btnConnTestLocal
+            // 
+            this.btnConnTestLocal.Location = new System.Drawing.Point(258, 72);
+            this.btnConnTestLocal.Name = "btnConnTestLocal";
+            this.btnConnTestLocal.Size = new System.Drawing.Size(75, 23);
+            this.btnConnTestLocal.TabIndex = 8;
+            this.btnConnTestLocal.Text = "连接测试";
+            this.btnConnTestLocal.UseVisualStyleBackColor = true;
+            this.btnConnTestLocal.Click += new System.EventHandler(this.btnConnTestLocal_Click);
             // 
             // txtAddress
             // 
@@ -153,6 +163,7 @@
             this.rdbApiKey.TabIndex = 1;
             this.rdbApiKey.Text = "ApiKey";
             this.rdbApiKey.UseVisualStyleBackColor = true;
+            this.rdbApiKey.Visible = false;
             // 
             // rdbLocal
             // 
@@ -165,16 +176,6 @@
             this.rdbLocal.TabStop = true;
             this.rdbLocal.Text = "本地";
             this.rdbLocal.UseVisualStyleBackColor = true;
-            // 
-            // btnConnTestLocal
-            // 
-            this.btnConnTestLocal.Location = new System.Drawing.Point(258, 72);
-            this.btnConnTestLocal.Name = "btnConnTestLocal";
-            this.btnConnTestLocal.Size = new System.Drawing.Size(75, 23);
-            this.btnConnTestLocal.TabIndex = 8;
-            this.btnConnTestLocal.Text = "连接测试";
-            this.btnConnTestLocal.UseVisualStyleBackColor = true;
-            this.btnConnTestLocal.Click += new System.EventHandler(this.btnConnTestLocal_Click);
             // 
             // FrmSetting
             // 

@@ -84,8 +84,19 @@ namespace FreeOfficeAI.UI.Forms
 
             try
             {
-                //以同步方式阻塞UI，防止点击测试后，关闭设置页面
-                if (OllamaApi.TestConnection(txtAddress.Text, cobModelName.Text).Result)
+                var frame = (LLMFrame)Enum.Parse(typeof(LLMFrame), cobFrame.Text);
+                var result = false;
+                if (frame == LLMFrame.Ollama)
+                {
+                    //以同步方式阻塞UI，防止点击测试后，关闭设置页面
+                    result = OllamaApi.TestConnection(txtAddress.Text, cobModelName.Text).Result;
+                }
+                else if (frame == LLMFrame.Vllm)
+                {
+                    result = VllmApi.TestConnection(txtAddress.Text, cobModelName.Text).Result;
+                }
+
+                if (result)
                 {
                     MessageBox.Show("连接成功！");
                 }
@@ -93,6 +104,7 @@ namespace FreeOfficeAI.UI.Forms
                 {
                     MessageBox.Show("连接失败！");
                 }
+
             }
             catch (AggregateException ex)
             {

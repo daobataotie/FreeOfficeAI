@@ -78,5 +78,6 @@ namespace FreeOfficeAI.Core
     public enum LLMFrame
     {
         Ollama,
+        Vllm
     }
 }
